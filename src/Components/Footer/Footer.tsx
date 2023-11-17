@@ -6,6 +6,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IconButton } from '@mui/material';
 
+type IProps = {
+    data: any,
+}
+
 const FooterContainer = styled('div')(({ theme }) => ({
     display: 'none',
 
@@ -37,19 +41,25 @@ const StyledIconButton = styled(IconButton)(() => ({
     }
 }))
 
-const Footer: React.FC = () => {
+const Footer: React.FC<IProps> = ({ data }) => {
+    const usersCount = data.length
+
     return (
         <FooterContainer>
-            <ButtonContainer>
-                <StyledIconButton>
-                    <ArrowBackIosIcon />
-                </StyledIconButton>
-                <ToggleButtonFooter />
-                <StyledIconButton>
-                    <ArrowForwardIosIcon />
-                </StyledIconButton>
-            </ButtonContainer>
-            <CollapseButtonFooter />
+            {usersCount > 12 && (
+                <>
+                    <ButtonContainer>
+                        <StyledIconButton>
+                            <ArrowBackIosIcon />
+                        </StyledIconButton>
+                        <ToggleButtonFooter />
+                        <StyledIconButton>
+                            <ArrowForwardIosIcon />
+                        </StyledIconButton>
+                    </ButtonContainer>
+                    <CollapseButtonFooter />
+                </>
+            )}
         </FooterContainer>
     )
 }

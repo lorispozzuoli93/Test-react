@@ -8,25 +8,27 @@ import IconButton from '@mui/material/IconButton';
 import { green } from '@mui/material/colors';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
+import { Badge, BadgeProps, useMediaQuery, useTheme } from '@mui/material';
 
 type IProps = {
-    data: any
+    data?: any,
+    alignment?: string | null
 }
 
-const StyledCard = styled(Card)(({ theme }) => ({
+const StyledCard = styled(Card)(() => ({
     padding: '24px',
     borderRadius: '12px',
     background: '#ffffff',
     boxShadow: '0px 1px 1px 0px rgba(0, 0, 0, 0.04) inset, 0px 6px 24px 0px rgba(0, 0, 0, 0.04), 0px 1px 4px 0px rgba(0, 0, 0, 0.05)',
     width: '100%',
 
-    "& span:nth-child(1)": {
+    "& span:nth-of-type(1)": {
         fontSize: '16px',
         fontWeight: 500,
         lineHeight: '24px',
     },
 
-    "& span:nth-child(2)": {
+    "& span:nth-of-type(2)": {
         fontSize: '14px',
         color: '#7A8194',
         fontWeight: 400,
@@ -38,6 +40,7 @@ const StyledCardHeader = styled(CardHeader)(() => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     padding: 0,
+    gap: '12px',
 }))
 
 const StyledCardActions = styled(CardActions)(() => ({
@@ -57,14 +60,35 @@ const StyledIconButton = styled(IconButton)(() => ({
     }
 }))
 
-const CardUsers: React.FC<IProps> = ({data}) => {
+const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: 4,
+        top: 50,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+        background: '#4AC1A2',
+    },
+}))
+
+const CardUsers: React.FC<IProps> = ({ data, alignment }) => {
+    const usersActive = data?.status === 'active'
+    const theme = useTheme()
+    const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
+
     return (
-        <StyledCard sx={{ maxWidth: 345 }}>
+        <StyledCard sx={{ maxWidth: isDesktop && alignment === 'left' ? 342 : 239 }}>
             <StyledCardHeader
                 avatar={
                     <>
-                        <Avatar sx={{ bgcolor: green[500], width: '56px', height: '56px' }} aria-label="recipe">
-                        </Avatar>
+                        {usersActive ? (
+                            <StyledBadge badgeContent=" " color="primary">
+                                <Avatar sx={{ bgcolor: green[500], width: '56px', height: '56px' }} aria-label="recipe">
+                                </Avatar>
+                            </StyledBadge>
+                        ) : (
+                            <Avatar sx={{ bgcolor: green[500], width: '56px', height: '56px' }} aria-label="recipe">
+                            </Avatar>
+                        )}
                         <StyledCardActions>
                             <StyledIconButton>
                                 <ForumRoundedIcon />
@@ -75,8 +99,8 @@ const CardUsers: React.FC<IProps> = ({data}) => {
                         </StyledCardActions>
                     </>
                 }
-                title={data.name}
-                subheader={data.email}
+                title={data?.name}
+                subheader={data?.email}
             />
         </StyledCard>
     )

@@ -14,6 +14,10 @@ import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import KeyboardCommandKeyIcon from '@mui/icons-material/KeyboardCommandKey';
 import { CartIcon } from '../Icon/Icon';
 
+type IProps = {
+  inputHandler: any
+}
+
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   background: 'transparent',
   padding: '60px 16px 16px 16px',
@@ -130,7 +134,7 @@ const StyledIconButton = styled(IconButton)(() => ({
   }
 }))
 
-const NavBar: React.FC = () => {
+const NavBar: React.FC<IProps> = ({ inputHandler }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -217,6 +221,7 @@ const NavBar: React.FC = () => {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={inputHandler}
             />
             <StyledIconButtonCommand>
               <KeyboardCommandKeyIcon children={'F'} />

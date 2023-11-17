@@ -12,7 +12,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const MenuContainer = styled('div')(({ theme }) => ({
     [theme.breakpoints.up('sm')]: {
-        display: 'none,'
+        display: 'none'
     },
 }))
 
